@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORREKT SOWERS S.A. - Accueil</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuration de la charte graphique (Vert) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandGreen: {
+                            DEFAULT: '#226b38',
+                            dark: '#1a522b',
+                            light: '#e8f5e9'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Style personnalisé pour l'image de fond du Hero */
+        .hero-banner {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- En-tête / Barre de navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-brandGreen text-white flex items-center justify-center rounded-lg font-bold text-2xl tracking-wider">
+                    K
+                </div>
+                <div>
+                    <span class="block font-bold text-lg text-brandGreen tracking-wide uppercase leading-none">CORREKT</span>
+                    <span class="block text-xs font-semibold text-gray-500 tracking-widest uppercase">SOWERS</span>
+                </div>
+            </a>
+
+            <!-- Navigation Desktop -->
+            <nav class="hidden md:flex items-center space-x-8 font-semibold text-sm tracking-wider uppercase text-gray-700">
+                <a href="#accueil" class="text-brandGreen border-b-2 border-brandGreen pb-1 transition">ACCUEIL</a>
+                <a href="#alevins" class="hover:text-brandGreen transition">ALEVINS</a>
+                <a href="#production" class="hover:text-brandGreen transition">PRODUCTION</a>
+                <a href="#contact" class="hover:text-brandGreen transition">CONTACT</a>
+            </nav>
+
+            <!-- Bouton Hamburger (Mobile) -->
+            <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Navigation Mobile (Cachée par défaut) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-4 space-y-2 text-center font-medium">
+            <a href="#accueil" class="block py-2 text-brandGreen font-bold">ACCUEIL</a>
+            <a href="#alevins" class="block py-2 text-gray-700 hover:text-brandGreen">ALEVINS</a>
+            <a href="#production" class="block py-2 text-gray-700 hover:text-brandGreen">PRODUCTION</a>
+            <a href="#contact" class="block py-2 text-gray-700 hover:text-brandGreen">CONTACT</a>
+        </div>
+    </header>
+
+    <!-- Section Hero / Bannière principale -->
+    <section id="accueil" class="hero-banner relative h-80 sm:h-96 flex items-center justify-center text-center px-4">
+        <div class="bg-black/60 border border-white/20 backdrop-blur-sm px-6 py-4 sm:px-10 sm:py-6 rounded-md max-w-2xl">
+            <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-wider uppercase leading-tight">
+                QUALITÉ & PISCICULTURE DURABLE.
+            </h1>
+        </div>
+    </section>
+
+    <!-- Section Présentation principale -->
+    <section class="max-w-4xl mx-auto px-4 py-12 text-center">
+        <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 uppercase tracking-wide leading-snug">
+            DÉCOUVREZ CORREKT SOWERS S.A. : <br>
+            <span class="text-brandGreen">LEADER EN ALEVINS ET POISSONS DE CONSOMMATION.</span>
+        </h2>
+    </section>
+
+    <!-- Section Cartes / Grille de services -->
+    <section class="max-w-6xl mx-auto px-4 pb-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Carte 1 : Production d'alevins -->
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-6 text-center shadow-sm hover:shadow-md transition duration-300 flex flex-col items-center">
+                <div class="w-24 h-24 mb-4 flex items-center justify-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3063/3063822.png" alt="Alevins" class="h-20 object-contain">
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 uppercase tracking-wide mb-2">
+                    PRODUCTION D'ALEVINS
+                </h3>
+                <p class="text-sm text-gray-600">
+                    Production d'alevins de haute qualité, issus de nos étangs et écloseries modernes pour vos élevages.
+                </p>
+            </div>
+
+            <!-- Carte 2 : Poissons Frais -->
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-6 text-center shadow-sm hover:shadow-md transition duration-300 flex flex-col items-center">
+                <div class="w-24 h-24 mb-4 flex items-center justify-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2970/2970052.png" alt="Poissons Frais" class="h-20 object-contain">
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 uppercase tracking-wide mb-2">
+                    POISSONS FRAIS
+                </h3>
+                <p class="text-sm text-gray-600">
+                    Poissons frais de consommation, élevés et nourris dans le respect absolu des normes sanitaires.
+                </p>
+            </div>
+
+            <!-- Carte 3 : Notre Technologie -->
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-6 text-center shadow-sm hover:shadow-md transition duration-300 flex flex-col items-center">
+                <div class="w-24 h-24 mb-4 flex items-center justify-center">
+                    <div class="w-16 h-16 rounded-full border-2 border-brandGreen flex items-center justify-center text-brandGreen text-3xl">
+                        <i class="fa-solid fa-microscope"></i>
+                    </div>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 uppercase tracking-wide mb-2">
+                    NOTRE TECHNOLOGIE
+                </h3>
+                <p class="text-sm text-gray-600">
+                    Utilisation de technologies piscicoles innovantes pour garantir une croissance saine et optimale.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Bouton d'action Contact -->
+        <div id="contact" class="text-center mt-10">
+            <a href="#contact-modal" onclick="alert('Formulaire de contact à venir !')" class="inline-block border-2 border-brandGreen text-brandGreen font-bold px-8 py-2.5 rounded-md uppercase tracking-wider hover:bg-brandGreen hover:text-white transition-all duration-300 shadow-sm">
+                CONTACTEZ-NOUS
+            </a>
+        </div>
+    </section>
+
+    <!-- Section Module PDF -->
+    <section id="documentation" class="max-w-4xl mx-auto px-4 py-6">
+        <h3 class="text-lg font-bold text-gray-900 uppercase mb-4 text-center">DOCUMENTATION OFFICIELLE</h3>
+        
+        <!-- Téléchargement du PDF -->
+        <div class="bg-white border-2 border-dashed border-brandGreen rounded-xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center font-bold text-2xl">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900">Devis technique pour la realisation du projet CORREKT SOWERS Sarl</h4>
+                    <p class="text-sm text-gray-500">Document PDF | Mis à jour pour 2026</p>
+                </div>
+            </div>
+            <a href="File/devis.pdf" download class="bg-brandGreen text-white font-bold px-6 py-2.5 rounded-lg uppercase text-sm hover:bg-brandGreen-dark transition">
+                <i class="fa-solid fa-download mr-2"></i> Télécharger PDF
+            </a>
+        </div>
+
+    </section>
+
+    <!-- Pied de page -->
+    <footer class="bg-gray-100 border-t border-gray-200 py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 CORREKT SOWERS Sarl - Tous droits réservés.</p>
+    </footer>
+
+    <!-- JavaScript ES6 (Gestion des interactions) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Gestion du menu hamburger mobile
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Fermer le menu mobile au clic sur un lien
+            const navLinks = mobileMenu.querySelectorAll('a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
