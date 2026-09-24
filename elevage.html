@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Notre site d'élevage — Correkt Sowers Sarl</title>
+<meta name="description" content="Visite du site de Correkt Sowers : écloserie, pré-grossissement, bassins de grossissement et traitement de l'eau.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ SYMBOLES SVG (icones reutilisables) ============ -->
+<svg class="sr" aria-hidden="true">
+  <symbol id="i-poisson" viewBox="0 0 64 40">
+    <path fill="currentColor" d="M2 20c8-13 22-18 33-18 9 0 16 4 21 9l6-7v32l-6-7c-5 5-12 9-21 9C24 38 10 33 2 20Z" opacity=".9"/>
+    <circle cx="42" cy="16" r="2.4" fill="#fff"/>
+  </symbol>
+  <symbol id="i-alevin" viewBox="0 0 64 40">
+    <path fill="currentColor" d="M6 20c7-8 16-11 24-11 7 0 12 2 16 6l10-6v22l-10-6c-4 4-9 6-16 6-8 0-17-3-24-11Z"/>
+    <circle cx="36" cy="17" r="2" fill="#fff"/>
+  </symbol>
+  <symbol id="i-croissance" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 5-7M21 6h-4M21 6v4M4 21h16"/>
+  </symbol>
+  <symbol id="i-sante" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 21C7 17.5 3.5 14.6 3.5 10.6 3.5 7.5 6 5.5 8.6 5.5c1.6 0 3 .8 3.4 2 .4-1.2 1.8-2 3.4-2 2.6 0 5.1 2 5.1 5.1 0 4-3.5 6.9-8.5 10.4Z"/>
+  </symbol>
+  <symbol id="i-goutte" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 3s6 6.4 6 10.4A6 6 0 0 1 6 13.4C6 9.4 12 3 12 3Z"/>
+  </symbol>
+  <symbol id="i-labo" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M10 3v6L4.6 18a2 2 0 0 0 1.7 3h11.4a2 2 0 0 0 1.7-3L14 9V3M9 3h6M8.5 14h7"/>
+  </symbol>
+  <symbol id="i-graine" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 21c0-6 3-10 9-11 0 6-3 10-9 11ZM12 21C12 15 9 11 3 10c0 6 3 10 9 11ZM12 21v-4"/>
+  </symbol>
+  <symbol id="i-equipe" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M8 11a3.2 3.2 0 1 0 0-6.4A3.2 3.2 0 0 0 8 11Zm8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2.5 19.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5M16 14.7c2.8.2 5 2.2 5 4.8"/>
+  </symbol>
+  <symbol id="i-bouclier" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 3l7.5 3v5.6c0 4.3-3 7.7-7.5 9.4-4.5-1.7-7.5-5.1-7.5-9.4V6L12 3Zm-3 9l2.2 2.2L15.5 10"/>
+  </symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M6.6 3h3l1.6 4-2 1.4a12.6 12.6 0 0 0 5.4 5.4L16 11.8l4 1.6v3a2 2 0 0 1-2.2 2C10.6 17.8 6.2 13.4 4.6 5.2A2 2 0 0 1 6.6 3Z"/>
+  </symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 6h18v12H3zM3 7l9 6 9-6"/>
+  </symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.4A2.4 2.4 0 1 1 12 6.6a2.4 2.4 0 0 1 0 4.8Z"/>
+  </symbol>
+  <symbol id="i-bassin" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 8h18v11H3zM3 8l3-4h12l3 4M7 12.5c1.6-1.4 3.4-1.4 5 0s3.4 1.4 5 0"/>
+  </symbol>
+</svg>
+
+<!-- ============ EN-TETE ============ -->
+<header class="entete">
+  <div class="wrap entete__in">
+    <a class="logo" href="index.html" aria-label="Correkt Sowers, retour à l'accueil">
+      <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="8" fill="#14401f"/>
+        <path d="M18 14h7v16.5L39 14h9L33.5 31 49 50h-9.5L25 33.5V50h-7z" fill="#8cc63f"/>
+      </svg>
+      <span class="logo__txt"><b>CORREKT</b><span>SOWERS SARL</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Navigation principale">
+      <a href="index.html">Accueil</a>
+      <a href="alevins.html">Nos alevins</a>
+      <a href="poissons.html">Production de poissons</a>
+      <a href="elevage.html">Site d'élevage</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="page" id="page-elevage">
+<div class="section section--serre" style="background:var(--vert-profond);color:#eaf3e6">
+    <div class="wrap">
+      <p class="fil">VISITE GUIDÉE</p>
+      <h1 style="color:#fff">Notre site d'élevage.</h1>
+      <p class="lead" style="color:#c6dcc6;margin-top:14px">Cinq zones séparées, un sens de circulation unique, de l'étang d'alimentation jusqu'au traitement de l'eau.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap duo" style="grid-template-columns:1.15fr .85fr">
+      <div class="plan">
+        <svg viewBox="0 0 700 540" aria-label="Plan du site d'élevage">
+          <rect width="700" height="540" fill="#dfeada"/>
+          <path d="M0 410c120-30 200 20 330-10s250-60 370-20v160H0z" fill="#cfe0c6"/>
+          <path d="M40 40h620v460H40z" fill="none" stroke="#9db995" stroke-dasharray="6 7"/>
+          <!-- zones -->
+          <g class="plan__pt" data-zone="etang">
+            <rect x="70" y="70" width="560" height="90" rx="10" fill="#2f7d8f"/>
+            <text x="350" y="122" text-anchor="middle" fill="#eefbfd" font-family="Archivo" font-size="19" font-weight="700">Étang</text>
+          </g>
+          <g class="plan__pt" data-zone="ecloserie">
+            <rect x="70" y="180" width="230" height="100" rx="10" fill="#1f6b32"/>
+            <text x="185" y="238" text-anchor="middle" fill="#eaf7e8" font-family="Archivo" font-size="19" font-weight="700">Écloserie</text>
+          </g>
+          <g class="plan__pt" data-zone="pregros">
+            <rect x="340" y="180" width="290" height="100" rx="10" fill="#3f9153"/>
+            <text x="485" y="238" text-anchor="middle" fill="#eefbfd" font-family="Archivo" font-size="19" font-weight="700">Pré-grossissement</text>
+          </g>
+          <g class="plan__pt" data-zone="bassins">
+            <rect x="70" y="300" width="290" height="170" rx="10" fill="#17505c"/>
+            <text x="215" y="380" text-anchor="middle" fill="#eefbfd" font-family="Archivo" font-size="19" font-weight="700">Bassins de</text>
+            <text x="215" y="404" text-anchor="middle" fill="#eefbfd" font-family="Archivo" font-size="19" font-weight="700">grossissement</text>
+          </g>
+          <g class="plan__pt" data-zone="eau">
+            <rect x="400" y="300" width="230" height="170" rx="10" fill="#14401f"/>
+            <text x="515" y="380" text-anchor="middle" fill="#eaf7e8" font-family="Archivo" font-size="19" font-weight="700">Traitement</text>
+            <text x="515" y="404" text-anchor="middle" fill="#eaf7e8" font-family="Archivo" font-size="19" font-weight="700">de l'eau</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="zone-info">
+        <p class="fil" style="color:var(--vert)">ZONE SÉLECTIONNÉE</p>
+        <h2 id="zone-titre" style="font-size:1.5rem">Étang</h2>
+        <p id="zone-texte">L'étang alimente le site en eau douce et sert de réserve en cas de coupure d'approvisionnement. Il est aussi le lieu de reproduction naturelle de quelques géniteurs, en complément de l'écloserie.</p>
+        <p style="font-size:.86rem;color:var(--texte-doux);margin:0">Touchez une zone du plan pour en savoir plus.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <h2 style="text-align:center">Vue d'ensemble du site</h2>
+      <p class="lead" style="text-align:center;margin:0 auto 30px;max-width:56ch">Six espaces qui se succèdent, de l'arrivée de l'eau jusqu'à l'équipe qui fait tourner le site chaque jour.</p>
+
+      <div class="grille g3">
+        <article class="espece">
+          <div class="visuel"><img src="images/img (4).jpg" alt="Étang d'alimentation en eau du site"></div>
+          <div class="espece__corps">
+            <span class="meta">Zone 1</span>
+            <h3>L'étang</h3>
+            <p>Réserve d'eau douce qui alimente tout le site et sert de zone tampon en cas de coupure.</p>
+          </div>
+        </article>
+        <article class="espece">
+          <div class="visuel"><img src="images/img (3).jpg" alt="Bâtiment de l'écloserie"></div>
+          <div class="espece__corps">
+            <span class="meta">Zone 2</span>
+            <h3>L'écloserie</h3>
+            <p>Bâtiment fermé où naissent les alevins : bouteilles d'incubation et bacs de larves à 28 °C.</p>
+          </div>
+        </article>
+        <article class="espece">
+          <div class="visuel"><img src="images/img (2).jpg" alt="Bacs de pré-grossissement des alevins"></div>
+          <div class="espece__corps">
+            <span class="meta">Zone 3</span>
+            <h3>Pré-grossissement</h3>
+            <p>Bacs couverts où les alevins passent au granulé avant leur transfert en bassin.</p>
+          </div>
+        </article>
+        <article class="espece">
+          <div class="visuel"><img src="images/img ().jpg" alt="Bassins de grossissement en rangée"></div>
+          <div class="espece__corps">
+            <span class="meta">Zone 4</span>
+            <h3>Bassins de grossissement</h3>
+            <p>18 bassins bâchés de 200 m³ où les poissons grandissent jusqu'au calibre de vente.</p>
+          </div>
+        </article>
+        <article class="espece">
+          <div class="visuel"><img src="images/img (10).jpg" alt="Installation de traitement et de filtration de l'eau"></div>
+          <div class="espece__corps">
+            <span class="meta">Zone 5</span>
+            <h3>Traitement de l'eau</h3>
+            <p>Décantation, filtration et recirculation partielle avant rejet ou réutilisation de l'eau.</p>
+          </div>
+        </article>
+        <article class="espece">
+          <div class="visuel"><img src="images/img (2).jpg" alt="Équipe technique de Correkt Sowers au travail"></div>
+          <div class="espece__corps">
+            <span class="meta">L'équipe</span>
+            <h3>Nos équipes</h3>
+            <p>Techniciens aquacoles, responsable qualité de l'eau et équipe de récolte, présents chaque jour.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section--feuille">
+    <div class="wrap">
+      <div class="grille g3">
+        <article class="carte">
+          <svg class="carte__ico"><use href="#i-bouclier"/></svg>
+          <h3>Biosécurité</h3>
+          <p>Pédiluve à l'entrée, matériel dédié par zone et quarantaine systématique de tout poisson entrant sur le site.</p>
+        </article>
+        <article class="carte carte--vert">
+          <svg class="carte__ico"><use href="#i-bassin"/></svg>
+          <h3>Bassins de grossissement</h3>
+          <p>18 bassins bâchés de 200 m³, vidangeables individuellement, avec aération de secours sur groupe électrogène.</p>
+        </article>
+        <article class="carte">
+          <svg class="carte__ico"><use href="#i-goutte"/></svg>
+          <h3>Gestion de l'eau</h3>
+          <p>Décantation, filtration et recirculation partielle. L'eau rejetée passe par un bassin planté avant de quitter le site.</p>
+        </article>
+      </div>
+
+      <div class="grille g2" style="margin-top:22px">
+        <div class="visuel visuel--large"><img src="images/elevage-equipe.jpg" alt="Équipe technique sur le site d'élevage"></div>
+        <div class="visuel visuel--large"><img src="images/elevage-vue-ciel.jpg" alt="Site d'élevage Correkt Sowers vu du ciel"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section--profond">
+    <div class="wrap duo">
+      <div>
+        <h2 style="color:#fff">Une équipe sur le site tous les jours</h2>
+        <p>Techniciens aquacoles, responsable qualité de l'eau et équipe de récolte. Les visites d'éleveurs sont possibles sur rendez-vous, le mardi et le jeudi matin.</p>
+        <a class="btn btn--clair" href="contact.html" style="margin-top:8px">Demander une visite</a>
+      </div>
+      <div>
+        <div class="chiffres" style="grid-template-columns:1fr 1fr">
+          <div class="chiffre"><b>5</b><span>zones séparées</span></div>
+          <div class="chiffre"><b>200 m³</b><span>par bassin de grossissement</span></div>
+          <div class="chiffre"><b>2×/jour</b><span>contrôle de l'oxygène dissous</span></div>
+          <div class="chiffre"><b>100 %</b><span>des lots enregistrés</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ PIED DE PAGE ============ -->
+<footer class="pied">
+  <div class="wrap">
+    <div class="pied__grille">
+      <div>
+        <a class="logo" href="index.html" style="margin-bottom:16px">
+          <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true">
+            <rect width="64" height="64" rx="8" fill="#ffffff" fill-opacity=".1" stroke="#8cc63f" stroke-opacity=".5"/>
+            <path d="M18 14h7v16.5L39 14h9L33.5 31 49 50h-9.5L25 33.5V50h-7z" fill="#8cc63f"/>
+          </svg>
+          <span class="logo__txt" style="color:#fff"><b>CORREKT</b><span style="color:#8fb896">SOWERS SARL</span></span>
+        </a>
+        <p style="font-size:.9rem;color:#a9c8ad;max-width:32ch">Pisciculture durable à Yaoundé : alevins, poissons de consommation et accompagnement des éleveurs.</p>
+      </div>
+      <div>
+        <h4>Produits</h4>
+        <ul>
+          <li><a href="alevins.html">Tilapia du Nil</a></li>
+          <li><a href="alevins.html">Clarias</a></li>
+          <li><a href="alevins.html">Alevins pré-grossis</a></li>
+          <li><a href="poissons.html">Poisson frais</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+2376000000">+237 6XX XX XX XX</a></li>
+          <li><a href="mailto:correktsowers@gmail.com">correktsowers@gmail.com</a></li>
+          <li>Yaoundé, Centre, Cameroun</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <span>© <span id="annee">2026</span> Correkt Sowers Sarl Tous droits réservés.</span>
+      <span>Site conçu pour la pisciculture camerounaise.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

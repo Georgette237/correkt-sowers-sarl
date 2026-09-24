@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact — Correkt Sowers Sarl</title>
+<meta name="description" content="Contactez Correkt Sowers Sarl à Yaoundé : commandes d'alevins, poisson frais, visites du site et demandes de partenariat.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ SYMBOLES SVG (icones reutilisables) ============ -->
+<svg class="sr" aria-hidden="true">
+  <symbol id="i-poisson" viewBox="0 0 64 40">
+    <path fill="currentColor" d="M2 20c8-13 22-18 33-18 9 0 16 4 21 9l6-7v32l-6-7c-5 5-12 9-21 9C24 38 10 33 2 20Z" opacity=".9"/>
+    <circle cx="42" cy="16" r="2.4" fill="#fff"/>
+  </symbol>
+  <symbol id="i-alevin" viewBox="0 0 64 40">
+    <path fill="currentColor" d="M6 20c7-8 16-11 24-11 7 0 12 2 16 6l10-6v22l-10-6c-4 4-9 6-16 6-8 0-17-3-24-11Z"/>
+    <circle cx="36" cy="17" r="2" fill="#fff"/>
+  </symbol>
+  <symbol id="i-croissance" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 5-7M21 6h-4M21 6v4M4 21h16"/>
+  </symbol>
+  <symbol id="i-sante" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 21C7 17.5 3.5 14.6 3.5 10.6 3.5 7.5 6 5.5 8.6 5.5c1.6 0 3 .8 3.4 2 .4-1.2 1.8-2 3.4-2 2.6 0 5.1 2 5.1 5.1 0 4-3.5 6.9-8.5 10.4Z"/>
+  </symbol>
+  <symbol id="i-goutte" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 3s6 6.4 6 10.4A6 6 0 0 1 6 13.4C6 9.4 12 3 12 3Z"/>
+  </symbol>
+  <symbol id="i-labo" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M10 3v6L4.6 18a2 2 0 0 0 1.7 3h11.4a2 2 0 0 0 1.7-3L14 9V3M9 3h6M8.5 14h7"/>
+  </symbol>
+  <symbol id="i-graine" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 21c0-6 3-10 9-11 0 6-3 10-9 11ZM12 21C12 15 9 11 3 10c0 6 3 10 9 11ZM12 21v-4"/>
+  </symbol>
+  <symbol id="i-equipe" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M8 11a3.2 3.2 0 1 0 0-6.4A3.2 3.2 0 0 0 8 11Zm8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2.5 19.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5M16 14.7c2.8.2 5 2.2 5 4.8"/>
+  </symbol>
+  <symbol id="i-bouclier" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 3l7.5 3v5.6c0 4.3-3 7.7-7.5 9.4-4.5-1.7-7.5-5.1-7.5-9.4V6L12 3Zm-3 9l2.2 2.2L15.5 10"/>
+  </symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M6.6 3h3l1.6 4-2 1.4a12.6 12.6 0 0 0 5.4 5.4L16 11.8l4 1.6v3a2 2 0 0 1-2.2 2C10.6 17.8 6.2 13.4 4.6 5.2A2 2 0 0 1 6.6 3Z"/>
+  </symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 6h18v12H3zM3 7l9 6 9-6"/>
+  </symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.4A2.4 2.4 0 1 1 12 6.6a2.4 2.4 0 0 1 0 4.8Z"/>
+  </symbol>
+  <symbol id="i-bassin" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 8h18v11H3zM3 8l3-4h12l3 4M7 12.5c1.6-1.4 3.4-1.4 5 0s3.4 1.4 5 0"/>
+  </symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 2.5a9.4 9.4 0 0 0-8.1 14.2L2.5 21.5l4.9-1.3A9.4 9.4 0 1 0 12 2.5Zm0 1.7a7.7 7.7 0 1 1-4 14.3l-.3-.2-2.9.8.8-2.8-.2-.3A7.7 7.7 0 0 1 12 4.2Zm-2.9 3.9c-.2 0-.5 0-.6.3-.2.3-.8.8-.8 1.9s.8 2.1.9 2.3c.1.2 1.6 2.5 4 3.5 2 .8 2.4.6 2.8.6.5 0 1.6-.6 1.8-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3l-1.8-.8c-.2-.1-.4-.1-.6.1l-.7.9c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2-1.3-.8-.7-1.3-1.6-1.4-1.9-.1-.2 0-.4.1-.5l.5-.6c.1-.2.2-.3.2-.5s0-.4-.1-.5c-.1-.1-.6-1.5-.9-2-.2-.4-.4-.4-.6-.4Z"/>
+  </symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M14 21v-7.5h2.5l.4-3H14V8.4c0-.9.3-1.5 1.6-1.5H17V4.3C16.7 4.3 15.8 4.2 14.7 4.2c-2.2 0-3.7 1.3-3.7 3.9V10.5H8.5v3H11V21Z"/>
+  </symbol>
+</svg>
+
+<!-- ============ EN-TETE ============ -->
+<header class="entete">
+  <div class="wrap entete__in">
+    <a class="logo" href="index.html" aria-label="Correkt Sowers, retour à l'accueil">
+      <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="8" fill="#14401f"/>
+        <path d="M18 14h7v16.5L39 14h9L33.5 31 49 50h-9.5L25 33.5V50h-7z" fill="#8cc63f"/>
+      </svg>
+      <span class="logo__txt"><b>CORREKT</b><span>SOWERS SARL</span></span>
+    </a>
+
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Navigation principale">
+      <a href="index.html">Accueil</a>
+      <a href="alevins.html">Nos alevins</a>
+      <a href="poissons.html">Production de poissons</a>
+      <a href="elevage.html">Site d'élevage</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="page" id="page-contact">
+<div style="position:relative">
+    <div class="visuel visuel--large" style="border-radius:0;aspect-ratio:auto;height:min(46vh,380px)">
+      <svg viewBox="0 0 1440 480" preserveAspectRatio="xMidYMid slice" aria-label="Carte de localisation, Yaoundé, Cameroun">
+        <rect width="1440" height="480" fill="#e9eee7"/>
+        <path d="M0 0h430v480H0z" fill="#9fc6d8"/>
+        <path d="M430 0c40 90 10 150 60 210s120 60 150 140 20 130-10 130H430z" fill="#e9eee7"/>
+        <g stroke="#9fc6d8" stroke-width="10" fill="none" opacity=".8">
+          <path d="M700 0c-40 120 20 190 60 260s40 140 20 220"/>
+          <path d="M1120 40c-60 90-30 170-90 240s-70 130-60 200"/>
+        </g>
+        <g stroke="#cdd8c8" stroke-width="6" fill="none">
+          <path d="M500 380h940M620 0v480M980 0v480M430 160h1010"/>
+        </g>
+        <g transform="translate(600,150)">
+          <use href="#i-pin" width="70" height="70" fill="#1f6b32"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap" style="position:relative;margin-top:-56px">
+      <div style="background:var(--vert-profond);color:#fff;display:inline-block;padding:20px 30px;border-radius:var(--r-m)">
+        <h1 style="font-size:clamp(1.5rem,3.4vw,2.1rem)">Correkt Sowers Sarl</h1>
+        <p style="color:#c6dcc6;margin:6px 0 0">Yaoundé, Cameroun</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap duo" style="grid-template-columns:1.1fr .9fr;align-items:start">
+      <div>
+        <h2>Écrivez-nous</h2>
+        <p class="lead">Une commande, une question technique ou une demande de partenariat : nous répondons sous 48 heures ouvrées.</p>
+        <form class="form" id="form-contact" novalidate style="margin-top:24px">
+          <div class="champ">
+            <label for="c-nom">Nom</label>
+            <input id="c-nom" name="nom" type="text" autocomplete="name" required>
+            <span class="erreur">Indiquez votre nom.</span>
+          </div>
+          <div class="champ">
+            <label for="c-mail">Email</label>
+            <input id="c-mail" name="email" type="email" autocomplete="email" required>
+            <span class="erreur">Cette adresse email n'est pas valide.</span>
+          </div>
+          <div class="champ">
+            <label for="c-msg">Message</label>
+            <textarea id="c-msg" name="message" required></textarea>
+            <span class="erreur">Écrivez votre message.</span>
+          </div>
+          <button class="btn btn--plein" type="submit">Envoyer le message</button>
+          <p class="form__etat" id="etat-contact" role="status"></p>
+        </form>
+      </div>
+
+      <div class="grille" style="gap:22px">
+        <div class="carte">
+          <h3>Coordonnées</h3>
+          <div class="coord" style="margin-top:14px">
+            <div class="coord__item">
+              <span class="coord__ico"><svg><use href="#i-tel"/></svg></span>
+              <span><b>+237 6XX XX XX XX</b><span>Service commercial</span></span>
+            </div>
+            <div class="coord__item">
+              <span class="coord__ico"><svg><use href="#i-tel"/></svg></span>
+              <span><b>+237 6XX XX XX XX</b><span>Support technique</span></span>
+            </div>
+            <div class="coord__item">
+              <span class="coord__ico" style="background:#25d366"><svg><use href="#i-whatsapp"/></svg></span>
+              <span><a href="https://wa.me/2376XXXXXXXX" target="_blank" rel="noopener"><b>+237 6XX XX XX XX</b></a><span>WhatsApp, réponse rapide</span></span>
+            </div>
+            <div class="coord__item">
+              <span class="coord__ico" style="background:#1877f2"><svg><use href="#i-facebook"/></svg></span>
+              <span><a href="https://facebook.com/correktsowers" target="_blank" rel="noopener"><b>Correkt Sowers Sarl</b></a><span>Page Facebook</span></span>
+            </div>
+            <div class="coord__item">
+              <span class="coord__ico"><svg><use href="#i-mail"/></svg></span>
+              <span><a href="mailto:correktsowers@gmail.com"><b>correktsowers@gmail.com</b></a><span>Réponse sous 48 h ouvrées</span></span>
+            </div>
+            <div class="coord__item">
+              <span class="coord__ico"><svg><use href="#i-pin"/></svg></span>
+              <span><b>Yaoundé, Centre</b><span>Visites du site sur rendez-vous</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="carte carte--vert">
+          <h3>Trouver un revendeur</h3>
+          <p>Nos alevins sont aussi distribués par des partenaires agréés dans le Centre, le Littoral et l'Ouest.</p>
+          <a class="btn btn--clair" style="margin-top:18px;align-self:flex-start" href="contact.html">Voir la liste</a>
+        </div>
+        <div class="carte">
+          <h3>Horaires</h3>
+          <p>Lundi à vendredi, 7 h 30 – 17 h.<br>Samedi, 8 h – 12 h.<br>Récoltes et livraisons le matin.</p>
+        </div>
+        <div class="carte">
+          <h3>Bon à savoir</h3>
+          <ul class="puces">
+            <li>Paiement en espèces, par Mobile Money ou par virement bancaire.</li>
+            <li>Livraison possible à Yaoundé et dans les villes voisines, selon le volume commandé.</li>
+            <li>Visite du site d'élevage sur rendez-vous, le mardi et le jeudi matin.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section--feuille">
+    <div class="wrap" style="text-align:center">
+      <h2>Nous trouver sur la carte</h2>
+      <p class="lead" style="margin:0 auto 20px">Site d'élevage et bureaux à Yaoundé, Centre du Cameroun.</p>
+      <a class="btn btn--ligne" href="https://www.google.com/maps/search/?api=1&query=Correkt+Sowers+Yaound%C3%A9" target="_blank" rel="noopener">Ouvrir dans Google Maps</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ PIED DE PAGE ============ -->
+<footer class="pied">
+  <div class="wrap">
+    <div class="pied__grille">
+      <div>
+        <a class="logo" href="index.html" style="margin-bottom:16px">
+          <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true">
+            <rect width="64" height="64" rx="8" fill="#ffffff" fill-opacity=".1" stroke="#8cc63f" stroke-opacity=".5"/>
+            <path d="M18 14h7v16.5L39 14h9L33.5 31 49 50h-9.5L25 33.5V50h-7z" fill="#8cc63f"/>
+          </svg>
+          <span class="logo__txt" style="color:#fff"><b>CORREKT</b><span style="color:#8fb896">SOWERS SARL</span></span>
+        </a>
+        <p style="font-size:.9rem;color:#a9c8ad;max-width:32ch">Pisciculture durable à Yaoundé : alevins, poissons de consommation et accompagnement des éleveurs.</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="alevins.html">Nos alevins</a></li>
+          <li><a href="poissons.html">Production de poissons</a></li>
+          <li><a href="elevage.html">Site d'élevage</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Produits</h4>
+        <ul>
+          <li><a href="alevins.html">Tilapia du Nil</a></li>
+          <li><a href="alevins.html">Clarias</a></li>
+          <li><a href="alevins.html">Alevins pré-grossis</a></li>
+          <li><a href="poissons.html">Poisson frais</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+2376000000">+237 6XX XX XX XX</a></li>
+          <li><a href="mailto:correktsowers@gmail.com">correktsowers@gmail.com</a></li>
+          <li>Yaoundé, Centre, Cameroun</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <span>© <span id="annee">2026</span> Correkt Sowers Sarl Tous droits réservés.</span>
+      <span>Site conçu pour la pisciculture camerounaise.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
