@@ -87,28 +87,19 @@
 <main id="main">
 <section class="page" id="page-contact">
 <div style="position:relative">
-    <div class="visuel visuel--large" style="border-radius:0;aspect-ratio:auto;height:min(46vh,380px)">
-      <svg viewBox="0 0 1440 480" preserveAspectRatio="xMidYMid slice" aria-label="Carte de localisation, Yaoundé, Cameroun">
-        <rect width="1440" height="480" fill="#e9eee7"/>
-        <path d="M0 0h430v480H0z" fill="#9fc6d8"/>
-        <path d="M430 0c40 90 10 150 60 210s120 60 150 140 20 130-10 130H430z" fill="#e9eee7"/>
-        <g stroke="#9fc6d8" stroke-width="10" fill="none" opacity=".8">
-          <path d="M700 0c-40 120 20 190 60 260s40 140 20 220"/>
-          <path d="M1120 40c-60 90-30 170-90 240s-70 130-60 200"/>
-        </g>
-        <g stroke="#cdd8c8" stroke-width="6" fill="none">
-          <path d="M500 380h940M620 0v480M980 0v480M430 160h1010"/>
-        </g>
-        <g transform="translate(600,150)">
-          <use href="#i-pin" width="70" height="70" fill="#1f6b32"/>
-        </g>
-      </svg>
+    <div class="carte-loc">
+      <iframe
+        title="Localisation exacte de Correkt Sowers Sarl, Yaoundé"
+        src="https://maps.google.com/maps?q=3.7515,11.4835&amp;z=17&amp;hl=fr&amp;output=embed"
+        loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
     <div class="wrap" style="position:relative;margin-top:-56px">
       <div style="background:var(--vert-profond);color:#fff;display:inline-block;padding:20px 30px;border-radius:var(--r-m)">
         <h1 style="font-size:clamp(1.5rem,3.4vw,2.1rem)">Correkt Sowers Sarl</h1>
         <p style="color:#c6dcc6;margin:6px 0 0">Yaoundé, Cameroun</p>
       </div>
+    </div>
+  </div>
     </div>
   </div>
 
@@ -189,11 +180,21 @@
     </div>
   </div>
 
-  <div class="section section--feuille">
+ <div class="section section--feuille">
     <div class="wrap" style="text-align:center">
       <h2>Nous trouver sur la carte</h2>
-      <p class="lead" style="margin:0 auto 20px">Site d'élevage et bureaux à Yaoundé, Centre du Cameroun.</p>
-      <a class="btn btn--ligne" href="https://www.google.com/maps/search/?api=1&query=Correkt+Sowers+Yaound%C3%A9" target="_blank" rel="noopener">Ouvrir dans Google Maps</a>
+      <p class="lead" style="margin:0 auto 8px">Site d'élevage et bureaux à Yaoundé, Centre du Cameroun.</p>
+      <p class="coords">GPS : 3°45'5,40" N &nbsp;·&nbsp; 11°29'0,6" E <span>(3,7515 ; 11,4835)</span></p>
+      <div class="carte-loc carte-loc--grande">
+        <iframe
+          title="Carte de Correkt Sowers Sarl"
+          src="https://maps.google.com/maps?q=3.7515,11.4835&amp;z=18&amp;hl=fr&amp;t=k&amp;output=embed"
+          loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px">
+        <a class="btn btn--plein" href="https://www.google.com/maps/search/?api=1&query=3.7515,11.4835" target="_blank" rel="noopener">Ouvrir dans Google Maps</a>
+        <a class="btn btn--ligne" href="https://www.google.com/maps/dir/?api=1&destination=3.7515,11.4835" target="_blank" rel="noopener">Itinéraire</a>
+      </div>
     </div>
   </div>
 </section>
