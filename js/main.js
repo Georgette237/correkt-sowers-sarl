@@ -62,7 +62,14 @@
         $barre.stop(true).css("width", 0);
         if (!reduit) $barre.animate({ width: "100%" }, DELAI, "linear");
       };
+      /* une image n'est téléchargée que lorsqu'elle va passer à l'écran */
+      var charger = function (k) {
+        var $i = $diapos.eq((k + $diapos.length) % $diapos.length);
+        var src = $i.attr("data-src");
+        if (src) $i.attr("src", src).removeAttr("data-src");
+      };
       var aller = function (n) {
+        charger(n); charger(n + 1);
         $diapos.eq(courant).removeClass("actif");
         $puces.children().eq(courant).removeClass("actif");
         courant = (n + $diapos.length) % $diapos.length;
@@ -81,6 +88,7 @@
         if (document.hidden) { clearInterval(minuteur); $barre.stop(true); }
         else demarrer();
       });
+      charger(1);
       demarrer();
     }
 
