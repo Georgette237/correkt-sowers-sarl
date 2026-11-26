@@ -1,0 +1,6 @@
+{
+  "name": "Correkt Sowers Sarl",
+  "description": "Pisciculture durable à Yaoundé : production d'alevins de tilapia et clarias, poissons frais de consommation, site d'élevage et actualités.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

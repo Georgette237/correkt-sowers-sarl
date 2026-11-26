@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Actualités &amp; Partenaires — Correkt Sowers Sarl</title>
+<meta name="description" content="Actualités de Correkt Sowers Sarl à Yaoundé : activités sur le terrain en images, vidéos et documentaires, et présentation de nos partenaires.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-title-key="actu.title">
+
+<!-- ============ SYMBOLES SVG (icones réutilisables) ============ -->
+<svg class="sr" aria-hidden="true">
+  <symbol id="i-play" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M8 5.5v13l11-6.5-11-6.5Z"/>
+  </symbol>
+</svg>
+
+<!-- ============ EN-TÊTE (centralisé : js/header.js) ============ -->
+<div id="entete-site"></div>
+
+<main id="main">
+<section class="page" id="page-actualites">
+  <div class="heros">
+    <img class="heros__fond" src="images/img (58).jpg" alt="Vue d'ensemble des bassins de pisciculture Correkt Sowers Sarl">
+    <div class="wrap heros__in">
+      <div class="heros__slab">
+        <h1 data-i18n="actu.hero.h1">Actualités, reportages et partenaires.</h1>
+        <p data-i18n="actu.hero.p">Suivez nos activités sur le terrain en images, vidéos et documentaires, et découvrez les partenaires qui accompagnent la filière piscicole.</p>
+        <div class="heros__cta">
+          <a class="btn btn--accent" href="contact.html?sujet=4" data-i18n="actu.hero.cta">Proposer un partenariat</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Activités : Images, Vidéos & Documentaires ===== -->
+  <div class="section">
+    <div class="wrap">
+      <p class="fil" style="color:var(--vert)" data-i18n="actu.fil">VIE DU SITE ET TERRAIN</p>
+      <h2 data-i18n="actu.h2">Nos activités en images, vidéos et documentaires</h2>
+      <p class="lead" style="max-width:64ch" data-i18n="actu.lead">Chaque campagne de ponte, chaque récolte matinale et chaque session de formation est documentée avec de courts retours de notre équipe.</p>
+
+      <div class="actu-filtres" role="tablist" aria-label="Filtrer les actualités">
+        <button type="button" class="actu-filtre actif" data-filtre="all" role="tab" aria-selected="true" data-i18n="actu.f.all">Toutes les activités</button>
+        <button type="button" class="actu-filtre" data-filtre="photo" role="tab" aria-selected="false" data-i18n="actu.f.photo">Photos de terrain</button>
+        <button type="button" class="actu-filtre" data-filtre="video" role="tab" aria-selected="false" data-i18n="actu.f.video">Vidéos</button>
+        <button type="button" class="actu-filtre" data-filtre="documentary" role="tab" aria-selected="false" data-i18n="actu.f.doc">Documentaires</button>
+      </div>
+
+      <div class="grille g3">
+        <!-- 1. Mini-documentaire -->
+        <article class="media-carte" data-kind="documentary">
+          <div class="media-carte__visuel">
+            <img loading="lazy" decoding="async" src="images/img (58).jpg" alt="De la source à la récolte : immersion dans notre ferme de Yaoundé">
+            <button type="button" class="media-carte__play" data-open-media="act-1" aria-label="Lire le mini-documentaire">
+              <span class="media-carte__play-btn"><svg><use href="#i-play"/></svg></span>
+            </button>
+          </div>
+          <div class="media-carte__corps">
+            <span class="media-carte__meta" data-i18n="actu.a1.meta">Mini-documentaire · Campagne 2026 · 08 min 40</span>
+            <h3 data-i18n="actu.a1.h3">De la source à la récolte : immersion dans notre ferme de Yaoundé</h3>
+            <p data-i18n="actu.a1.p">Documentaire complet sur le fonctionnement des 5 zones du site, le curage de l'étang et la maîtrise de l'eau en circuit suivi.</p>
+            <div class="media-carte__action">
+              <button type="button" class="btn btn--plein" data-open-media="act-1" data-i18n="actu.btn.watch">Lire la présentation</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. Vidéo terrain -->
+        <article class="media-carte" data-kind="video">
+          <div class="media-carte__visuel">
+            <img loading="lazy" decoding="async" src="images/img (74).jpg" alt="Conditionnement en sacs oxygénés avant livraison">
+            <button type="button" class="media-carte__play" data-open-media="act-2" aria-label="Lire la vidéo terrain">
+              <span class="media-carte__play-btn"><svg><use href="#i-play"/></svg></span>
+            </button>
+          </div>
+          <div class="media-carte__corps">
+            <span class="media-carte__meta" data-i18n="actu.a2.meta">Vidéo terrain · Activité récente · 03 min 15</span>
+            <h3 data-i18n="actu.a2.h3">Conditionnement en sacs oxygénés avant livraison</h3>
+            <p data-i18n="actu.a2.p">Aperçu vidéo du comptage contradictoire et de la mise en sac oxygéné pour garantir une survie maximale lors du transport.</p>
+            <div class="media-carte__action">
+              <button type="button" class="btn btn--plein" data-open-media="act-2" data-i18n="actu.btn.watch">Lire la présentation</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. Reportage photo -->
+        <article class="media-carte" data-kind="photo">
+          <div class="media-carte__visuel">
+            <img loading="lazy" decoding="async" src="images/img (90).jpg" alt="Accueil et formation pratique des jeunes pisciculteurs" data-zoom-photo>
+          </div>
+          <div class="media-carte__corps">
+            <span class="media-carte__meta" data-i18n="actu.a3.meta">Reportage photo · Terrain Yaoundé</span>
+            <h3 data-i18n="actu.a3.h3">Accueil et formation pratique des jeunes pisciculteurs</h3>
+            <p data-i18n="actu.a3.p">Visite technique sur le site : calcul de la ration hebdomadaire, pesée d'échantillon et tenue du registre de bassin.</p>
+            <div class="media-carte__action">
+              <button type="button" class="btn btn--ligne" data-zoom-photo data-i18n="actu.btn.photo">Agrandir la photo</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4. Mini-documentaire -->
+        <article class="media-carte" data-kind="documentary">
+          <div class="media-carte__visuel">
+            <img loading="lazy" decoding="async" src="images/img (8).jpg" alt="Dans les coulisses de l'écloserie : incubation du tilapia et du clarias">
+            <button type="button" class="media-carte__play" data-open-media="act-4" aria-label="Lire le mini-documentaire">
+              <span class="media-carte__play-btn"><svg><use href="#i-play"/></svg></span>
+            </button>
+          </div>
+          <div class="media-carte__corps">
+            <span class="media-carte__meta" data-i18n="actu.a4.meta">Mini-documentaire · Dossier technique · 06 min 20</span>
+            <h3 data-i18n="actu.a4.h3">Dans les coulisses de l'écloserie : incubation du tilapia et du clarias</h3>
+            <p data-i18n="actu.a4.p">Regard détaillé sur la sélection des géniteurs, l'incubation à 28 °C et le sevrage des larves au micro-granulé.</p>
+            <div class="media-carte__action">
+              <button type="button" class="btn btn--plein" data-open-media="act-4" data-i18n="actu.btn.watch">Lire la présentation</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. Vidéo terrain -->
+        <article class="media-carte" data-kind="video">
+          <div class="media-carte__visuel">
+            <img loading="lazy" decoding="async" src="images/img (18).jpg" alt="Pêche sélective et calibrage des lots de 400 g et plus">
+            <button type="button" class="media-carte__play" data-open-media="act-5" aria-label="Lire la vidéo terrain">
+              <span class="media-carte__play-btn"><svg><use href="#i-play"/></svg></span>
+            </button>
+          </div>
+          <div class="media-carte__corps">
+            <span class="media-carte__meta" data-i18n="actu.a5.meta">Vidéo terrain · Récolte matinale · 02 min 50</span>
+            <h3 data-i18n="actu.a5.h3">Pêche sélective et calibrage des lots de 400 g et plus</h3>
+            <p data-i18n="actu.a5.p">Comment l'équipe prélève les sujets marchands à l'aube pour préserver la fraîcheur jusqu'à la livraison.</p>
+            <div class="media-carte__action">
+              <button type="button" class="btn btn--plein" data-open-media="act-5" data-i18n="actu.btn.watch">Lire la présentation</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6. Reportage photo -->
+        <article class="media-carte" data-kind="photo">
+          <div class="media-carte__visuel">
+            <img loading="lazy" decoding="async" src="images/img (21).jpg" alt="Curage et entretien de l'étang d'alimentation" data-zoom-photo>
+          </div>
+          <div class="media-carte__corps">
+            <span class="media-carte__meta" data-i18n="actu.a6.meta">Reportage photo · Aménagement</span>
+            <h3 data-i18n="actu.a6.h3">Curage et entretien de l'étang d'alimentation</h3>
+            <p data-i18n="actu.a6.p">Travaux réguliers sur notre étang de 200 m² pour optimiser la qualité de l'eau et sécuriser les réserves en saison sèche.</p>
+            <div class="media-carte__action">
+              <button type="button" class="btn btn--ligne" data-zoom-photo data-i18n="actu.btn.photo">Agrandir la photo</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Partenaires : Slogans et petites images ===== -->
+  <div class="section section--feuille" id="partenaires">
+    <div class="wrap">
+      <p class="fil" style="color:var(--vert)" data-i18n="actu.part.fil">ILS AVANCENT AVEC NOUS</p>
+      <h2 data-i18n="actu.part.h2">Nos partenaires et leurs engagements</h2>
+      <p class="lead" style="max-width:62ch" data-i18n="actu.part.lead">Éleveurs relais, fournisseurs d'aliments, restaurateurs et acteurs locaux partagent avec nous une vision concrète de la pisciculture camerounaise.</p>
+
+      <div class="grille g2" style="margin-top:32px">
+        <article class="partenaire-carte">
+          <div class="partenaire-carte__thumb">
+            <img loading="lazy" decoding="async" src="images/img (77).jpg" alt="Réseau Éleveurs du Centre">
+          </div>
+          <div>
+            <p class="partenaire-carte__slogan" data-i18n="actu.p1.s">« Des alevins vigoureux dès le premier jour, des récoltes prévisibles à chaque cycle. »</p>
+            <p class="partenaire-carte__nom" data-i18n="actu.p1.n">Réseau Éleveurs du Centre · Fermes partenaires</p>
+          </div>
+        </article>
+
+        <article class="partenaire-carte">
+          <div class="partenaire-carte__thumb">
+            <img loading="lazy" decoding="async" src="images/img (76).jpg" alt="Nutrition Aquacole Locale">
+          </div>
+          <div>
+            <p class="partenaire-carte__slogan" data-i18n="actu.p2.s">« Un granulé équilibré et traçable pour valoriser chaque bassin sans gaspillage. »</p>
+            <p class="partenaire-carte__nom" data-i18n="actu.p2.n">Nutrition Aquacole Locale · Partenaire aliment flottant</p>
+          </div>
+        </article>
+
+        <article class="partenaire-carte">
+          <div class="partenaire-carte__thumb">
+            <img loading="lazy" decoding="async" src="images/img (50).jpg" alt="Tables &amp; Poissonneries de Yaoundé">
+          </div>
+          <div>
+            <p class="partenaire-carte__slogan" data-i18n="actu.p3.s">« La fraîcheur du matin, livrée calibrée et prête pour nos cuisines. »</p>
+            <p class="partenaire-carte__nom" data-i18n="actu.p3.n">Tables &amp; Poissonneries de Yaoundé · Restauration</p>
+          </div>
+        </article>
+
+        <article class="partenaire-carte">
+          <div class="partenaire-carte__thumb">
+            <img loading="lazy" decoding="async" src="images/img (60).jpg" alt="Relais Littoral &amp; Ouest">
+          </div>
+          <div>
+            <p class="partenaire-carte__slogan" data-i18n="actu.p4.s">« Rapprocher la génétique Correkt Sowers de chaque bassin régional. »</p>
+            <p class="partenaire-carte__nom" data-i18n="actu.p4.n">Relais Littoral &amp; Ouest · Distributeurs agréés</p>
+          </div>
+        </article>
+
+        <article class="partenaire-carte">
+          <div class="partenaire-carte__thumb">
+            <img loading="lazy" decoding="async" src="images/img (14).jpg" alt="Atelier Transformation &amp; Fumage">
+          </div>
+          <div>
+            <p class="partenaire-carte__slogan" data-i18n="actu.p5.s">« Du poisson sain, nettoyé, mariné ou fumé dans le respect de l'hygiène. »</p>
+            <p class="partenaire-carte__nom" data-i18n="actu.p5.n">Atelier Transformation &amp; Fumage · Post-récolte</p>
+          </div>
+        </article>
+
+        <article class="partenaire-carte">
+          <div class="partenaire-carte__thumb">
+            <img loading="lazy" decoding="async" src="images/img (82).jpg" alt="Accompagnement Technique Terrain">
+          </div>
+          <div>
+            <p class="partenaire-carte__slogan" data-i18n="actu.p6.s">« Transmettre les bons gestes d'élevage pour faire réussir chaque ferme. »</p>
+            <p class="partenaire-carte__nom" data-i18n="actu.p6.n">Accompagnement Technique Terrain · Conseil</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap" style="text-align:center">
+      <h2 data-i18n="actu.cta.h2">Vous souhaitez devenir partenaire ou visiter une activité ?</h2>
+      <p class="lead" style="margin:0 auto 26px" data-i18n="actu.cta.p">Échangez directement avec notre équipe technique ou commerciale à Yaoundé.</p>
+      <a class="btn btn--plein" href="contact.html?sujet=4" data-i18n="actu.cta.btn">Contacter Correkt Sowers Sarl</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ PIED DE PAGE (centralisé : js/footer.js) ============ -->
+<div id="pied-site"></div>
+<noscript><p style="text-align:center;padding:24px">Correkt Sowers Sarl · Yaoundé, Cameroun</p></noscript>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/cookies.js"></script>
+<script src="js/header.js"></script>
+<script src="js/footer.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
