@@ -1,9 +1,9 @@
 /* ============================================================
-   CORREKT SOWERS SARL — script commun (jQuery)
-   Menu, carrousel du héros, étapes de l'écloserie, plan du site,
-   apparitions au défilement, compteurs, agrandissement des images,
-   formulaires envoyés sur WhatsApp.
-   Nécessite : jquery.min.js, config.js, footer.js (dans cet ordre).
+   CORREKT SOWERS SARL — Script commun dynamique (100% JS + jQuery)
+   Initialise : traduction FR/EN, en-tête, pied de page, cookies,
+   carrousel, étapes écloserie, plan SVG, actualités & lecteur vidéo,
+   formulaires WhatsApp, compteurs, lightbox, haut de page et
+   secours d'images si le dossier images/ n'est pas encore copié.
    ============================================================ */
 (function ($) {
   "use strict";
@@ -12,9 +12,52 @@
   var $win = $(window);
   var reduit = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  $(function () {
+  /* ---------- Secours automatique si une image locale est absente ---------- */
+  function attacherSecoursImages() {
+    $("img").each(function () {
+      var img = this;
+      if (img.dataset.fallbackBound) return;
+      img.dataset.fallbackBound = "1";
 
-    /* ---------- coordonnées issues de config.js ---------- */
+      var appliquerSecours = function () {
+        var $img = $(img);
+        if ($img.closest(".logo").length) {
+          $img.replaceWith(
+            '<span class="logo-fallback">' +
+              '<span class="logo-fallback__badge"><svg viewBox="0 0 64 40" aria-hidden="true"><path fill="currentColor" d="M2 20c8-13 22-18 33-18 9 0 16 4 21 9l6-7v32l-6-7c-5 5-12 9-21 9C24 38 10 33 2 20Z"/><circle cx="42" cy="16" r="2.4" fill="#14401f"/></svg></span>' +
+              '<span class="logo-fallback__txt"><b>CORREKT SOWERS</b><span>SARL · YAOUNDÉ</span></span>' +
+            "</span>"
+          );
+        } else if ($img.hasClass("heros__fond")) {
+          $img.css("opacity", 0);
+        } else {
+          var alt = $img.attr("alt") || "Correkt Sowers Sarl";
+          $img.replaceWith(
+            '<div class="img-fallback" role="img" aria-label="' + alt.replace(/"/g, "&quot;") + '">' +
+              '<svg viewBox="0 0 64 40" aria-hidden="true"><path fill="currentColor" d="M2 20c8-13 22-18 33-18 9 0 16 4 21 9l6-7v32l-6-7c-5 5-12 9-21 9C24 38 10 33 2 20Z"/><circle cx="42" cy="16" r="2.4" fill="#14401f"/></svg>' +
+              "<span>" + alt + "</span>" +
+            "</div>"
+          );
+        }
+      };
+
+      img.addEventListener("error", appliquerSecours);
+      if (img.complete && img.naturalWidth === 0) {
+        appliquerSecours();
+      }
+    });
+  }
+
+  $(function () {
+    /* 1. Initialisation langue + header + footer + cookies */
+    var lang = window.CS_GET_LANG ? window.CS_GET_LANG() : "fr";
+    if (window.CS_SET_LANG) {
+      window.CS_SET_LANG(lang);
+    }
+
+    attacherSecoursImages();
+
+    /* 2. Coordonnées dynamiques issues de config.js */
     $("[data-cs]").each(function () {
       var v = CS[$(this).data("cs")];
       if (v) $(this).text(v);
@@ -23,38 +66,23 @@
       $(this).attr("href", CS.lien($(this).data("csLien")));
     });
 
-    /* ---------- menu mobile + lien actif ---------- */
-    var $nav = $("#nav"), $burger = $("#burger");
-    $burger.on("click", function () {
-      var ouvert = $nav.toggleClass("ouvert").hasClass("ouvert");
-      $burger.attr("aria-expanded", ouvert ? "true" : "false");
-    });
-    $nav.find("a").on("click", function () {
-      $nav.removeClass("ouvert");
-      $burger.attr("aria-expanded", "false");
-    });
-    var fichier = location.pathname.split("/").pop() || "index.html";
-    $nav.find("a").filter(function () { return $(this).attr("href") === fichier; })
-      .addClass("actif").attr("aria-current", "page");
-
-    /* ---------- année (au cas où le pied de page serait statique) ---------- */
-    $("#annee").text(new Date().getFullYear());
-
-    /* ============================================================
-       CARROUSEL DU HÉROS (accueil) — défilement automatique, 10 s
-       ============================================================ */
+    /* 3. Carrousel du héros (accueil) — 10 s */
     var $diapos = $("#heros-diapos .heros__diapo");
     if ($diapos.length > 1) {
       var DELAI = 10000;
-      var courant = 0, minuteur = null;
+      var courant = 0;
+      var minuteur = null;
       var $puces = $("#heros-puces");
       var $barre = $(".heros__barre span");
 
       $diapos.each(function (k) {
         $("<button type='button' class='heros__puce'></button>")
           .toggleClass("actif", k === 0)
-          .attr("aria-label", "Image " + (k + 1) + " sur " + $diapos.length)
-          .on("click", function () { aller(k); demarrer(); })
+          .attr("aria-label", "Image " + (k + 1) + " / " + $diapos.length)
+          .on("click", function () {
+            aller(k);
+            demarrer();
+          })
           .appendTo($puces);
       });
 
@@ -62,14 +90,8 @@
         $barre.stop(true).css("width", 0);
         if (!reduit) $barre.animate({ width: "100%" }, DELAI, "linear");
       };
-      /* une image n'est téléchargée que lorsqu'elle va passer à l'écran */
-      var charger = function (k) {
-        var $i = $diapos.eq((k + $diapos.length) % $diapos.length);
-        var src = $i.attr("data-src");
-        if (src) $i.attr("src", src).removeAttr("data-src");
-      };
+
       var aller = function (n) {
-        charger(n); charger(n + 1);
         $diapos.eq(courant).removeClass("actif");
         $puces.children().eq(courant).removeClass("actif");
         courant = (n + $diapos.length) % $diapos.length;
@@ -77,156 +99,330 @@
         $puces.children().eq(courant).addClass("actif");
         lancerBarre();
       };
+
       var demarrer = function () {
         clearInterval(minuteur);
-        minuteur = setInterval(function () { aller(courant + 1); }, DELAI);
+        minuteur = setInterval(function () {
+          aller(courant + 1);
+        }, DELAI);
         lancerBarre();
       };
 
-      /* on met le défilement en pause quand l'onglet n'est pas visible */
       document.addEventListener("visibilitychange", function () {
-        if (document.hidden) { clearInterval(minuteur); $barre.stop(true); }
-        else demarrer();
+        if (document.hidden) {
+          clearInterval(minuteur);
+          $barre.stop(true);
+        } else {
+          demarrer();
+        }
       });
-      charger(1);
+
       demarrer();
     }
 
-    /* ---------- entrée du texte du héros ---------- */
-    if (!reduit) {
-      $(".heros__in").children().each(function (k) {
-        $(this).css({ opacity: 0, position: "relative", top: 28 })
-          .delay(150 + k * 170)
-          .animate({ opacity: 1, top: 0 }, 750, "swing");
-      });
-    }
-
-    /* ---------- texte tapé (page contact) ---------- */
-    $(".js-typed").each(function () {
-      var $s = $(this);
-      var mots = String($s.data("mots")).split("|");
-      if (reduit) { $s.text(mots[0]); return; }
-      var m = 0, c = 0, sens = 1;
-      (function tick() {
-        var mot = mots[m], d = 85;
+    /* 4. Texte tapé dynamique (page contact) */
+    var typedTimer = null;
+    function lancerTyped() {
+      clearTimeout(typedTimer);
+      var $s = $(".js-typed");
+      if (!$s.length) return;
+      var curLang = window.CS_GET_LANG ? window.CS_GET_LANG() : "fr";
+      var motsStr = window.CS_I18N && window.CS_I18N[curLang] ? window.CS_I18N[curLang].typedWords : $s.data("mots");
+      var mots = String(motsStr).split("|");
+      if (reduit) {
+        $s.text(mots[0]);
+        return;
+      }
+      var m = 0;
+      var c = 0;
+      var sens = 1;
+      function tick() {
+        var mot = mots[m];
+        var d = 85;
         c += sens;
         $s.text(mot.slice(0, c));
-        if (sens === 1 && c === mot.length) { sens = -1; d = 1700; }
-        else if (sens === -1 && c === 0) { sens = 1; m = (m + 1) % mots.length; d = 380; }
-        else if (sens === -1) d = 40;
-        setTimeout(tick, d);
-      })();
-    });
+        if (sens === 1 && c === mot.length) {
+          sens = -1;
+          d = 1700;
+        } else if (sens === -1 && c === 0) {
+          sens = 1;
+          m = (m + 1) % mots.length;
+          d = 380;
+        } else if (sens === -1) {
+          d = 40;
+        }
+        typedTimer = setTimeout(tick, d);
+      }
+      tick();
+    }
+    lancerTyped();
 
-    /* ============================================================
-       ÉTAPES DE L'ÉCLOSERIE (page alevins) — texte + image
-       ============================================================ */
+    /* 5. Étapes de l'écloserie (page alevins) */
     var $proc = $("#proc");
-    if ($proc.length) {
-      var $etapes = $proc.find(".proc__etape");
-      var $pImg = $("#proc-img"), $pTitre = $("#proc-titre"),
-          $pTexte = $("#proc-texte"), $pNum = $("#proc-num");
-      var $pBloc = $("#proc-detail").find(".proc-detail__img img, .proc-detail__txt");
-      var $pTxt = $("#proc-detail .proc-detail__txt");
+    var etapeCourante = 0;
+    function afficherEtape(idx, animer) {
+      if (!$proc.length) return;
+      etapeCourante = idx;
+      var curLang = window.CS_GET_LANG ? window.CS_GET_LANG() : "fr";
+      var dict = window.CS_I18N[curLang];
+      var step = dict.alevinsSteps[idx];
+      if (!step) return;
 
-      /* préchargement des images des étapes */
-      $etapes.each(function () { (new Image()).src = $(this).data("img"); });
+      $proc.find(".proc__etape").removeClass("actif").eq(idx).addClass("actif");
+      var $pImg = $("#proc-img");
+      var $pTitre = $("#proc-titre");
+      var $pTexte = $("#proc-texte");
+      var $pNum = $("#proc-num");
+      var $pBloc = $("#proc-detail").find(".proc-detail__img, .proc-detail__txt");
 
-      var choisir = function ($e) {
-        if ($e.hasClass("actif")) return;
-        $etapes.removeClass("actif");
-        $e.addClass("actif");
-        var d = $e.data();
-        $pBloc.stop(true).fadeTo(reduit ? 0 : 200, 0).promise().done(function () {
-          $pImg.attr({ src: d.img, alt: d.alt });
-          $pTitre.text(d.titre);
-          $pTexte.text(d.texte);
-          $pNum.text("Étape " + d.etape + " sur " + $etapes.length);
-          $pTxt.css({ position: "relative", left: reduit ? 0 : -26 });
-          $pBloc.fadeTo(reduit ? 0 : 380, 1);
-          $pTxt.animate({ left: 0 }, reduit ? 0 : 380);
-        });
+      var appliquer = function () {
+        if ($pImg.length) $pImg.attr({ src: step.img, alt: step.alt });
+        $pTitre.text(step.titre);
+        $pTexte.text(step.texte);
+        $pNum.text(dict.ui.stepPrefix + " " + (idx + 1) + " " + dict.ui.stepOf + " " + dict.alevinsSteps.length);
       };
 
-      $etapes.on("click", function () { choisir($(this)); });
-      $etapes.find(".proc__pion").on("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          choisir($(this).closest(".proc__etape"));
-        }
+      if (!animer || reduit) {
+        appliquer();
+      } else {
+        $pBloc.stop(true).fadeTo(180, 0).promise().done(function () {
+          appliquer();
+          $pBloc.fadeTo(320, 1);
+        });
+      }
+    }
+
+    if ($proc.length) {
+      $proc.find(".proc__etape").each(function (i) {
+        $(this).on("click", function () {
+          afficherEtape(i, true);
+        });
+        $(this).find(".proc__pion").on("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            afficherEtape(i, true);
+          }
+        });
       });
     }
 
-    /* ============================================================
-       ZONES DU PLAN (page site d'élevage)
-       ============================================================ */
-    var ZONES = {
-      etang: ["Étang",
-        "Réserve d'eau douce en amont du site, qui alimente l'écloserie et les bassins. Elle sert aussi de zone tampon en cas de coupure d'approvisionnement et accueille quelques géniteurs en reproduction naturelle."],
-      ecloserie: ["Écloserie",
-        "Bâtiment fermé, accès réservé au personnel formé. Bouteilles d'incubation, bacs de larves et eau chauffée à 28 °C en circuit fermé. C'est ici que commence la traçabilité de chaque lot."],
-      pregros: ["Pré-grossissement",
-        "Bacs couverts où les alevins passent au granulé et sont triés par calibre. Densité réduite et deux vidanges par semaine pour garder une eau propre."],
-      bassins: ["Bassins de grossissement",
-        "18 bassins bâchés de 200 m³, aérés et vidangeables un par un. Chaque bassin a sa fiche : mise en charge, ration, pesées d'échantillon et date de récolte prévue."],
-      eau: ["Traitement de l'eau",
-        "Décantation, filtration mécanique et recirculation partielle. L'eau sortante traverse un bassin planté avant rejet, ce qui limite la charge en matière organique."]
-    };
-
+    /* 6. Zones du plan SVG (page site d'élevage) */
     var $plan = $(".plan");
-    if ($plan.length) {
+    var zoneCourante = "etang";
+    function afficherZone(zoneKey, animer) {
+      if (!$plan.length) return;
+      zoneCourante = zoneKey;
+      var curLang = window.CS_GET_LANG ? window.CS_GET_LANG() : "fr";
+      var z = window.CS_I18N[curLang].zones[zoneKey];
+      if (!z) return;
+
       var $zInfo = $("#zone-titre, #zone-texte");
+      var maj = function () {
+        $("#zone-titre").text(z[0]);
+        $("#zone-texte").text(z[1]);
+      };
+      if (!animer || reduit) {
+        maj();
+      } else {
+        $zInfo.stop(true).fadeTo(150, 0).promise().done(function () {
+          maj();
+          $zInfo.fadeTo(280, 1);
+        });
+      }
+      $plan.find(".plan__pt rect").attr("stroke", "none");
+      $plan.find('.plan__pt[data-zone="' + zoneKey + '"] rect').attr({ stroke: "#8cc63f", "stroke-width": 4 });
+    }
+
+    if ($plan.length) {
       $plan.find(".plan__pt").attr({ tabindex: 0, role: "button" }).each(function () {
         var $g = $(this);
         var ouvrir = function () {
-          var z = ZONES[$g.data("zone")];
-          if (!z) return;
-          $zInfo.stop(true).fadeTo(reduit ? 0 : 150, 0).promise().done(function () {
-            $("#zone-titre").text(z[0]);
-            $("#zone-texte").text(z[1]);
-            $zInfo.fadeTo(reduit ? 0 : 320, 1);
-          });
-          $plan.find(".plan__pt rect").attr("stroke", "none");
-          $g.find("rect").attr({ stroke: "#8cc63f", "stroke-width": 4 });
+          afficherZone($g.data("zone"), true);
         };
         $g.on("click", ouvrir);
         $g.on("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(); }
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            ouvrir();
+          }
         });
       });
     }
 
-    /* ============================================================
-       FORMULAIRES — validation puis envoi sur WhatsApp
-       ============================================================ */
+    /* 7. Page Actualités : filtres + lecteur vidéo/documentaire */
+    var $filtres = $(".actu-filtre");
+    if ($filtres.length) {
+      $filtres.on("click", function () {
+        var cat = $(this).data("filtre");
+        $filtres.removeClass("actif").attr("aria-selected", "false");
+        $(this).addClass("actif").attr("aria-selected", "true");
+        $(".media-carte").each(function () {
+          var kind = $(this).data("kind");
+          $(this).toggle(cat === "all" || kind === cat);
+        });
+      });
+
+      /* ---- Vraies vidéos : une entrée par carte (id = data-open-media) ----
+         src     : fichier MP4 (H.264/AAC) placé dans le dossier videos/
+         poster  : image affichée avant la lecture
+         youtube : (option) identifiant YouTube au lieu de src
+         times   : (option) secondes de début de chaque chapitre */
+      var VIDEOS = window.CS_VIDEOS || {
+        "act-1": { src: "videos/ferme-yaounde.mp4",   poster: "images/img (58).jpg" },
+        "act-2": { src: "videos/sacs-oxygenes.mp4",   poster: "images/img (74).jpg" },
+        "act-4": { src: "videos/ecloserie.mp4",       poster: "images/img (8).jpg" },
+        "act-5": { src: "videos/peche-selective.mp4", poster: "images/img (18).jpg" }
+      };
+
+      var ouvrirLecteur = function (id) {
+        var curLang = window.CS_GET_LANG ? window.CS_GET_LANG() : "fr";
+        var dict = window.CS_I18N[curLang];
+        var item = dict.actualitesMedia[id];
+        if (!item) return;
+
+        $("#cs-lecteur").remove();
+        var chapitresHtml = item.chapters
+          .map(function (c, i) {
+            return '<button type="button" class="lecteur-chapitre' + (i === 0 ? " actif" : "") + '" data-idx="' + i + '">' + c + "</button>";
+          })
+          .join("");
+
+        var media = VIDEOS[id];
+        var ecranInterne;
+        if (media && media.youtube) {
+          ecranInterne =
+            '<iframe src="https://www.youtube-nocookie.com/embed/' + media.youtube + '?autoplay=1&rel=0" title="' + item.title +
+            '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+        } else if (media && media.src) {
+          ecranInterne =
+            '<video id="cs-lecteur-video" controls autoplay playsinline preload="metadata" poster="' + (media.poster || item.img) + '">' +
+            '<source src="' + media.src + '" type="video/mp4"></video>' +
+            '<button type="button" class="lecteur-fermer lecteur-fermer--video" id="cs-lecteur-x" aria-label="' + dict.ui.close + '">&times;</button>' +
+            '<p class="lecteur-erreur" id="cs-lecteur-erreur" hidden>Vidéo momentanément indisponible.</p>';
+        } else {
+          media = null;
+          ecranInterne = [
+          '      <img src="' + item.img + '" alt="' + item.title + '">',
+          '      <div class="lecteur-voile">',
+          '        <div class="lecteur-haut">',
+          '          <span class="lecteur-badge">' + item.kindLabel + "</span>",
+          '          <button type="button" class="lecteur-fermer" id="cs-lecteur-x" aria-label="' + dict.ui.close + '">&times;</button>',
+          "        </div>",
+          "        <div>",
+          '          <div class="lecteur-controles">',
+          '            <button type="button" class="lecteur-play" id="cs-lecteur-play" aria-label="Lecture / Pause">&#9658;</button>',
+          "            <div>",
+          '              <h3 style="margin:0;color:#fff;font-size:1.15rem">' + item.title + "</h3>",
+          '              <p id="cs-lecteur-chap-courant" style="margin:4px 0 0;font-size:.82rem;color:#d6ecd8">' + item.chapters[0] + "</p>",
+          "            </div>",
+          "          </div>",
+          '          <div class="lecteur-barre"><span id="cs-lecteur-prog" style="width:' + Math.round((1 / item.chapters.length) * 100) + '%"></span></div>',
+          "        </div>",
+          "      </div>",
+          ].join("\n");
+        }
+
+        var modalHtml = [
+          '<div class="lecteur-overlay" id="cs-lecteur" role="dialog" aria-modal="true" aria-label="' + item.title + '">',
+          '  <div class="lecteur-boite">',
+          '    <div class="lecteur-ecran' + (media ? " lecteur-ecran--video" : "") + '">',
+          ecranInterne,
+          "    </div>",
+          '    <div class="lecteur-corps">',
+          '      <p style="font-size:.95rem;color:var(--texte-doux);margin:0 0 14px">' + item.summary + "</p>",
+          '      <div style="font-family:Archivo,sans-serif;font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--vert-profond)">' + dict.texts["actu.chapters"] + "</div>",
+          '      <div class="lecteur-chapitres">' + chapitresHtml + "</div>",
+          "    </div>",
+          "  </div>",
+          "</div>",
+        ].join("\n");
+
+        $("body").append(modalHtml);
+        attacherSecoursImages();
+
+        var playing = true;
+        $("#cs-lecteur-play").html("&#10074;&#10074;").on("click", function () {
+          playing = !playing;
+          $(this).html(playing ? "&#10074;&#10074;" : "&#9658;");
+        });
+
+        $(".lecteur-chapitre").on("click", function () {
+          var idx = parseInt($(this).data("idx"), 10);
+          $(".lecteur-chapitre").removeClass("actif");
+          $(this).addClass("actif");
+          $("#cs-lecteur-chap-courant").text(item.chapters[idx]);
+          $("#cs-lecteur-prog").css("width", Math.round(((idx + 1) / item.chapters.length) * 100) + "%");
+          var vid = document.getElementById("cs-lecteur-video");
+          var t = media && media.times ? media.times[idx] : undefined;
+          if (vid && typeof t === "number") {
+            vid.currentTime = t;
+            vid.play();
+          }
+        });
+
+        $("#cs-lecteur-video source").on("error", function () {
+          $("#cs-lecteur-erreur").prop("hidden", false);
+        });
+
+        $("#cs-lecteur-x").on("click", function () {
+          $("#cs-lecteur").remove();
+        });
+        $("#cs-lecteur").on("click", function (e) {
+          if (e.target === this) $("#cs-lecteur").remove();
+        });
+      };
+
+      $(document).on("click", "[data-open-media]", function () {
+        ouvrirLecteur($(this).data("openMedia"));
+      });
+    }
+
+    /* 8. Pré-sélection fluide de l'objet de contact via ?sujet=0..4 */
+    var $cSujet = $("#c-sujet");
+    if ($cSujet.length && window.location.search) {
+      var match = window.location.search.match(/[?&]sujet=(\d+)/);
+      if (match) {
+        var idx = parseInt(match[1], 10);
+        if ($cSujet.find("option").eq(idx).length) {
+          $cSujet.prop("selectedIndex", idx);
+        }
+      }
+    }
+
+    /* 9. Validation des formulaires + envoi WhatsApp */
     function formulaire($f, $etat, opts) {
       var montrer = function (contenu) {
-        $etat.empty().append(contenu).addClass("visible").hide().fadeIn(300);
+        $etat.empty().append(contenu).addClass("visible").hide().fadeIn(260);
       };
 
       $f.on("submit", function (e) {
         e.preventDefault();
+        var curLang = window.CS_GET_LANG ? window.CS_GET_LANG() : "fr";
+        var ui = window.CS_I18N[curLang].ui;
         var premier = null;
 
         $f.find("[required]").each(function () {
-          var $c = $(this), v = $.trim($c.val());
+          var $c = $(this);
+          var v = $.trim($c.val());
           var mauvais = !v;
-          if (!mauvais && $c.attr("type") === "email")
+          if (!mauvais && $c.attr("type") === "email") {
             mauvais = !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
-          if (!mauvais && $c.attr("type") === "tel")
+          }
+          if (!mauvais && $c.attr("type") === "tel") {
             mauvais = v.replace(/\D/g, "").length < 8;
+          }
           $c.closest(".champ").toggleClass("invalide", mauvais);
           if (mauvais && !premier) premier = $c;
         });
 
         if (premier) {
           premier.focus();
-          montrer("Complétez les champs signalés avant d'envoyer.");
+          montrer(ui.formInvalid);
           return;
         }
 
         if (!CS.waValide || !CS.waValide()) {
-          montrer("Le numéro WhatsApp de l'entreprise n'est pas encore renseigné (fichier js/config.js).");
+          montrer(ui.waMissing);
           return;
         }
 
@@ -235,8 +431,8 @@
         if (!fenetre) window.location.href = url;
 
         montrer([
-          document.createTextNode(opts.confirmation + " "),
-          $("<a>").attr({ href: url, target: "_blank", rel: "noopener" }).text("Ouvrir WhatsApp")
+          document.createTextNode(opts.confirmation(ui) + " "),
+          $("<a>").attr({ href: url, target: "_blank", rel: "noopener noreferrer" }).text(ui.openWa),
         ]);
         $f[0].reset();
       });
@@ -246,12 +442,16 @@
       });
     }
 
-    var val = function ($f, nom) { return $.trim($f.find("[name='" + nom + "']").val()); };
+    var val = function ($f, nom) {
+      return $.trim($f.find("[name='" + nom + "']").val());
+    };
 
     var $fd = $("#form-devis");
     if ($fd.length) {
       formulaire($fd, $("#etat-devis"), {
-        confirmation: "Votre demande est prête : envoyez-la dans la conversation WhatsApp qui s'ouvre.",
+        confirmation: function (ui) {
+          return ui.devisConfirm;
+        },
         message: function ($f) {
           return [
             "*Demande de cotation d'alevins*",
@@ -259,143 +459,141 @@
             "Téléphone : " + val($f, "tel"),
             "Email : " + val($f, "email"),
             "Espèce souhaitée : " + val($f, "espece"),
-            "Quantité et date de mise en charge : " + val($f, "message")
+            "Quantité et date de mise en charge : " + val($f, "message"),
           ].join("\n");
-        }
+        },
       });
     }
 
     var $fc = $("#form-contact");
     if ($fc.length) {
       formulaire($fc, $("#etat-contact"), {
-        confirmation: "Votre message est prêt : envoyez-le dans la conversation WhatsApp qui s'ouvre.",
+        confirmation: function (ui) {
+          return ui.contactConfirm;
+        },
         message: function ($f) {
           return [
             "*Message depuis le site Correkt Sowers*",
+            "Objet : " + val($f, "sujet"),
             "Nom : " + val($f, "nom"),
             "Email : " + val($f, "email"),
-            "Message : " + val($f, "message")
+            "Message : " + val($f, "message"),
           ].join("\n");
-        }
+        },
       });
     }
 
-    /* ============================================================
-       EFFETS AU DÉFILEMENT : apparitions, compteurs, parallaxe,
-       en-tête compact, bouton « haut de page »
-       ============================================================ */
-
-    /* --- apparitions --- */
+    /* 10. Effets au défilement : apparitions, en-tête compact, haut de page */
     var $rv = $();
     if (!reduit) {
-      var SEL = ".section .carte, .espece, .fiche, .recap, .frise__etape, .chiffre, .apercu, " +
-                ".proc__etape, .zone-info, .section .duo__media, .engagement, .etape-ligne__txt, .etape-ligne__img";
-      $rv = $(SEL).not(".proc-detail *").each(function () {
-        var $el = $(this);
-        $el.addClass("rv");
-        if ($el.is(".etape-ligne__txt")) $el.addClass("rv-g");
-        if ($el.is(".etape-ligne__img")) $el.addClass("rv-d");
-      });
+      var SEL =
+        ".section .carte, .espece, .fiche, .recap, .frise__etape, .chiffre, " +
+        ".proc__etape, .zone-info, .section .duo__media, .engagement, .etape-ligne__txt, .etape-ligne__img, .media-carte, .partenaire-carte";
+      $rv = $(SEL)
+        .not(".proc-detail *")
+        .each(function () {
+          var $el = $(this);
+          $el.addClass("rv");
+          if ($el.is(".etape-ligne__txt")) $el.addClass("rv-g");
+          if ($el.is(".etape-ligne__img")) $el.addClass("rv-d");
+        });
     }
 
     var revele = function () {
-      var bas = $win.scrollTop() + $win.height() - 50;
+      var bas = $win.scrollTop() + $win.height() - 40;
       $rv = $rv.filter(function () {
-        var el = this, $el = $(el);
+        var el = this;
+        var $el = $(el);
         if ($el.offset().top > bas) return true;
         var rang = $el.parent().children(".rv, .rv-in").index(el);
-        var delai = Math.max(rang, 0) % 4 * 110;
+        var delai = (Math.max(rang, 0) % 4) * 90;
         setTimeout(function () {
           $el.addClass("rv-in");
-          /* on rend la main aux styles d'origine une fois l'effet terminé */
-          setTimeout(function () { $el.removeClass("rv rv-in rv-g rv-d"); }, 900);
+          setTimeout(function () {
+            $el.removeClass("rv rv-in rv-g rv-d");
+          }, 800);
         }, delai);
         return false;
       });
     };
 
-    /* --- compteurs --- */
-    var $compt = $(".chiffre b").filter(function () { return /\d/.test($(this).text()); });
-    if (!reduit) {
-      $compt.each(function () {
-        var $b = $(this), t = $b.text(), m = t.match(/\d+(?:[.,]\d+)?/)[0];
-        var dec = /[.,]\d/.test(m) ? m.split(/[.,]/)[1].length : 0;
-        $b.data({ t: t, m: m, dec: dec, cible: parseFloat(m.replace(",", ".")) });
-        $b.text(t.replace(m, (0).toFixed(dec).replace(".", ",")));
+    var $haut = $(
+      "<button type='button' class='haut' aria-label='Retour en haut de la page'>" +
+        "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 15l6-6 6 6'/></svg></button>"
+    )
+      .appendTo("body")
+      .hide()
+      .on("click", function () {
+        $("html,body").stop(true).animate({ scrollTop: 0 }, reduit ? 0 : 500);
       });
-    } else { $compt = $(); }
 
-    var compter = function () {
-      var bas = $win.scrollTop() + $win.height() - 30;
-      $compt = $compt.filter(function () {
-        var $b = $(this);
-        if ($b.offset().top > bas) return true;
-        var d = $b.data();
-        $({ v: 0 }).animate({ v: d.cible }, {
-          duration: 1500,
-          step: function (now) {
-            $b.text(d.t.replace(d.m, now.toFixed(d.dec).replace(".", ",")));
-          },
-          complete: function () { $b.text(d.t); }
-        });
-        return false;
-      });
-    };
-
-    /* --- parallaxe de l'image de fond du héros --- */
-    var $fonds = $(".heros > .heros__fond, .heros > .heros__diapos");
-
-    /* --- bouton haut de page --- */
-    var $haut = $("<button type='button' class='haut' aria-label='Retour en haut de la page'>" +
-      "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 15l6-6 6 6'/></svg></button>")
-      .appendTo("body").hide()
-      .on("click", function () { $("html,body").stop(true).animate({ scrollTop: 0 }, reduit ? 0 : 600); });
-
-    var $entete = $(".entete");
     var attente = false;
     var auDefilement = function () {
       var y = $win.scrollTop();
-      $entete.toggleClass("entete--compact", y > 40);
-      if (y > 600) $haut.fadeIn(200); else $haut.fadeOut(200);
-
-      if (!reduit) {
-        $fonds.each(function () {
-          var $h = $(this).parent(), haut = $h.offset().top, h = $h.outerHeight();
-          var decal = Math.min(Math.max((y - haut) * 0.25, 0), h * 0.12);
-          $(this).css("transform", "translateY(" + decal + "px)");
-        });
-      }
+      $(".entete").toggleClass("entete--compact", y > 40);
+      if (y > 520) $haut.fadeIn(200);
+      else $haut.fadeOut(200);
       revele();
-      compter();
     };
+
     $win.on("scroll resize", function () {
       if (attente) return;
       attente = true;
-      requestAnimationFrame(function () { attente = false; auDefilement(); });
+      requestAnimationFrame(function () {
+        attente = false;
+        auDefilement();
+      });
     });
     auDefilement();
 
-    /* ============================================================
-       IMAGES : agrandissement au clic (lightbox)
-       ============================================================ */
+    /* 11. Lightbox d'agrandissement au clic */
     var $lb = $(
       "<div class='lb' role='dialog' aria-modal='true' aria-label='Image agrandie'>" +
         "<button type='button' class='lb__x' aria-label='Fermer'>&times;</button>" +
         "<figure class='lb__in'><img alt=''><figcaption></figcaption></figure>" +
       "</div>"
-    ).appendTo("body").hide();
+    ).appendTo("body");
 
-    var fermer = function () { $lb.stop(true).fadeOut(200); };
-    $(document).on("click",
-      ".visuel img, .etape-ligne__img img, .fiche__photo img, .proc-detail__img img, .apercu__img img",
+    var fermerLb = function () {
+      $lb.stop(true).fadeOut(180);
+    };
+
+    $(document).on(
+      "click",
+      ".visuel img, .etape-ligne__img img, .fiche__photo img, .proc-detail__img img, .partenaire-carte__thumb img, [data-zoom-photo]",
       function () {
         if ($(this).closest("a").length) return;
-        $lb.find("img").attr({ src: this.currentSrc || this.src, alt: this.alt });
-        $lb.find("figcaption").text(this.alt);
-        $lb.stop(true).fadeIn(reduit ? 0 : 250);
-      });
-    $lb.on("click", fermer);
-    $(document).on("keydown", function (e) { if (e.key === "Escape") fermer(); });
+        var src = this.currentSrc || this.src;
+        var alt = this.alt;
+        if (!src) {
+          var $cardImg = $(this).closest(".media-carte").find(".media-carte__visuel img");
+          if ($cardImg.length) {
+            src = $cardImg[0].currentSrc || $cardImg[0].src;
+            alt = $cardImg[0].alt;
+          }
+        }
+        if (!src) return;
+        $lb.find("img").attr({ src: src, alt: alt });
+        $lb.find("figcaption").text(alt);
+        $lb.stop(true).fadeIn(reduit ? 0 : 220);
+      }
+    );
 
+    $lb.on("click", fermerLb);
+    $(document).on("keydown", function (e) {
+      if (e.key === "Escape") {
+        fermerLb();
+        $("#cs-lecteur").remove();
+      }
+    });
+
+    /* Mise à jour des blocs dynamiques quand la langue change */
+    window.CS_ON_LANG_CHANGE = function () {
+      lancerTyped();
+      afficherEtape(etapeCourante, false);
+      afficherZone(zoneCourante, false);
+    };
+    afficherEtape(etapeCourante, false);
+    afficherZone(zoneCourante, false);
   });
 })(jQuery);
