@@ -12,41 +12,92 @@
   var $win = $(window);
   var reduit = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------- Secours automatique si une image locale est absente ---------- */
+  /* ---------- Secours non-destructif si une image locale est absente ---------- */
   function attacherSecoursImages() {
     $("img").each(function () {
       var img = this;
       if (img.dataset.fallbackBound) return;
       img.dataset.fallbackBound = "1";
 
+      var retirerSecours = function () {
+        var $img = $(img);
+        $img.removeClass("img-manquante");
+        $img.css("opacity", "");
+        $img.siblings(".img-fallback, .logo-fallback").remove();
+      };
+
       var appliquerSecours = function () {
+        if (img.naturalWidth > 0) {
+          retirerSecours();
+          return;
+        }
+        var currentSrc = img.getAttribute("src") || "";
+        if (!img.dataset.origSrc || (img.dataset.lastRetrySrc && currentSrc !== img.dataset.lastRetrySrc)) {
+          img.dataset.origSrc = currentSrc;
+          img.dataset.retryStep = "0";
+        }
+        var origSrc = img.dataset.origSrc;
+        var step = parseInt(img.dataset.retryStep || "0", 10);
+
+        /* Essai automatique des variantes d'extension (.JPG, .jpeg, .png) si nécessaire */
+        if (step === 0 && /\.jpg$/i.test(origSrc)) {
+          img.dataset.retryStep = "1";
+          img.dataset.lastRetrySrc = origSrc.replace(/\.jpg$/i, ".JPG");
+          img.src = img.dataset.lastRetrySrc;
+          return;
+        }
+        if (step === 1 && /\.jpg$/i.test(origSrc)) {
+          img.dataset.retryStep = "2";
+          img.dataset.lastRetrySrc = origSrc.replace(/\.jpg$/i, ".jpeg");
+          img.src = img.dataset.lastRetrySrc;
+          return;
+        }
+        if (step === 2 && /\.jpg$/i.test(origSrc)) {
+          img.dataset.retryStep = "3";
+          img.dataset.lastRetrySrc = origSrc.replace(/\.jpg$/i, ".png");
+          img.src = img.dataset.lastRetrySrc;
+          return;
+        }
+
         var $img = $(img);
         if ($img.closest(".logo").length) {
-          $img.replaceWith(
-            '<span class="logo-fallback">' +
-              '<span class="logo-fallback__badge"><svg viewBox="0 0 64 40" aria-hidden="true"><path fill="currentColor" d="M2 20c8-13 22-18 33-18 9 0 16 4 21 9l6-7v32l-6-7c-5 5-12 9-21 9C24 38 10 33 2 20Z"/><circle cx="42" cy="16" r="2.4" fill="#14401f"/></svg></span>' +
-              '<span class="logo-fallback__txt"><b>CORREKT SOWERS</b><span>SARL · YAOUNDÉ</span></span>' +
-            "</span>"
-          );
+          $img.hide();
+          if (!$img.siblings(".logo-fallback").length) {
+            $img.after(
+              '<span class="logo-fallback">' +
+                '<span class="logo-fallback__badge"><svg viewBox="0 0 64 40" aria-hidden="true"><path fill="currentColor" d="M2 20c8-13 22-18 33-18 9 0 16 4 21 9l6-7v32l-6-7c-5 5-12 9-21 9C24 38 10 33 2 20Z"/><circle cx="42" cy="16" r="2.4" fill="#14401f"/></svg></span>' +
+                '<span class="logo-fallback__txt"><b>CORREKT SOWERS</b><span>SARL · YAOUNDÉ</span></span>' +
+              "</span>"
+            );
+          }
         } else if ($img.hasClass("heros__fond")) {
           $img.css("opacity", 0);
         } else {
-          var alt = $img.attr("alt") || "Correkt Sowers Sarl";
-          $img.replaceWith(
-            '<div class="img-fallback" role="img" aria-label="' + alt.replace(/"/g, "&quot;") + '">' +
-              '<svg viewBox="0 0 64 40" aria-hidden="true"><path fill="currentColor" d="M2 20c8-13 22-18 33-18 9 0 16 4 21 9l6-7v32l-6-7c-5 5-12 9-21 9C24 38 10 33 2 20Z"/><circle cx="42" cy="16" r="2.4" fill="#14401f"/></svg>' +
-              "<span>" + alt + "</span>" +
-            "</div>"
-          );
+          $img.addClass("img-manquante");
+          if (!$img.siblings(".img-fallback").length) {
+            var alt = $img.attr("alt") || "Correkt Sowers Sarl";
+            $img.after(
+              '<div class="img-fallback" role="img" aria-label="' + alt.replace(/"/g, "&quot;") + '">' +
+                '<svg viewBox="0 0 64 40" aria-hidden="true"><path fill="currentColor" d="M2 20c8-13 22-18 33-18 9 0 16 4 21 9l6-7v32l-6-7c-5 5-12 9-21 9C24 38 10 33 2 20Z"/><circle cx="42" cy="16" r="2.4" fill="#14401f"/></svg>' +
+                "<span>" + alt + "</span>" +
+              "</div>"
+            );
+          }
         }
       };
 
+      img.addEventListener("load", retirerSecours);
       img.addEventListener("error", appliquerSecours);
-      if (img.complete && img.naturalWidth === 0) {
-        appliquerSecours();
-      }
     });
   }
+
+  $win.on("load", function () {
+    $("img").each(function () {
+      if (this.complete && this.naturalWidth === 0 && !this.dataset.retryStep) {
+        this.dispatchEvent(new Event("error"));
+      }
+    });
+  });
 
   $(function () {
     /* 1. Initialisation langue + header + footer + cookies */
@@ -262,18 +313,6 @@
         });
       });
 
-      /* ---- Vraies vidéos : une entrée par carte (id = data-open-media) ----
-         src     : fichier MP4 (H.264/AAC) placé dans le dossier videos/
-         poster  : image affichée avant la lecture
-         youtube : (option) identifiant YouTube au lieu de src
-         times   : (option) secondes de début de chaque chapitre */
-      var VIDEOS = window.CS_VIDEOS || {
-        "act-1": { src: "videos/ferme-yaounde.mp4",   poster: "images/img (58).jpg" },
-        "act-2": { src: "videos/sacs-oxygenes.mp4",   poster: "images/img (74).jpg" },
-        "act-4": { src: "videos/ecloserie.mp4",       poster: "images/img (8).jpg" },
-        "act-5": { src: "videos/peche-selective.mp4", poster: "images/img (18).jpg" }
-      };
-
       var ouvrirLecteur = function (id) {
         var curLang = window.CS_GET_LANG ? window.CS_GET_LANG() : "fr";
         var dict = window.CS_I18N[curLang];
@@ -287,21 +326,10 @@
           })
           .join("");
 
-        var media = VIDEOS[id];
-        var ecranInterne;
-        if (media && media.youtube) {
-          ecranInterne =
-            '<iframe src="https://www.youtube-nocookie.com/embed/' + media.youtube + '?autoplay=1&rel=0" title="' + item.title +
-            '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
-        } else if (media && media.src) {
-          ecranInterne =
-            '<video id="cs-lecteur-video" controls autoplay playsinline preload="metadata" poster="' + (media.poster || item.img) + '">' +
-            '<source src="' + media.src + '" type="video/mp4"></video>' +
-            '<button type="button" class="lecteur-fermer lecteur-fermer--video" id="cs-lecteur-x" aria-label="' + dict.ui.close + '">&times;</button>' +
-            '<p class="lecteur-erreur" id="cs-lecteur-erreur" hidden>Vidéo momentanément indisponible.</p>';
-        } else {
-          media = null;
-          ecranInterne = [
+        var modalHtml = [
+          '<div class="lecteur-overlay" id="cs-lecteur" role="dialog" aria-modal="true" aria-label="' + item.title + '">',
+          '  <div class="lecteur-boite">',
+          '    <div class="lecteur-ecran">',
           '      <img src="' + item.img + '" alt="' + item.title + '">',
           '      <div class="lecteur-voile">',
           '        <div class="lecteur-haut">',
@@ -319,14 +347,6 @@
           '          <div class="lecteur-barre"><span id="cs-lecteur-prog" style="width:' + Math.round((1 / item.chapters.length) * 100) + '%"></span></div>',
           "        </div>",
           "      </div>",
-          ].join("\n");
-        }
-
-        var modalHtml = [
-          '<div class="lecteur-overlay" id="cs-lecteur" role="dialog" aria-modal="true" aria-label="' + item.title + '">',
-          '  <div class="lecteur-boite">',
-          '    <div class="lecteur-ecran' + (media ? " lecteur-ecran--video" : "") + '">',
-          ecranInterne,
           "    </div>",
           '    <div class="lecteur-corps">',
           '      <p style="font-size:.95rem;color:var(--texte-doux);margin:0 0 14px">' + item.summary + "</p>",
@@ -352,16 +372,6 @@
           $(this).addClass("actif");
           $("#cs-lecteur-chap-courant").text(item.chapters[idx]);
           $("#cs-lecteur-prog").css("width", Math.round(((idx + 1) / item.chapters.length) * 100) + "%");
-          var vid = document.getElementById("cs-lecteur-video");
-          var t = media && media.times ? media.times[idx] : undefined;
-          if (vid && typeof t === "number") {
-            vid.currentTime = t;
-            vid.play();
-          }
-        });
-
-        $("#cs-lecteur-video source").on("error", function () {
-          $("#cs-lecteur-erreur").prop("hidden", false);
         });
 
         $("#cs-lecteur-x").on("click", function () {
@@ -536,7 +546,25 @@
       revele();
     };
 
-    $win.on("scroll resize", function () {
+    if ("IntersectionObserver" in window && $rv.length) {
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var $el = $(entry.target);
+            $el.addClass("rv-in");
+            setTimeout(function () {
+              $el.removeClass("rv rv-in rv-g rv-d");
+            }, 800);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: "80px 0px" });
+      $rv.each(function () {
+        obs.observe(this);
+      });
+    }
+
+    $win.on("scroll resize load", function () {
       if (attente) return;
       attente = true;
       requestAnimationFrame(function () {
@@ -589,6 +617,7 @@
 
     /* Mise à jour des blocs dynamiques quand la langue change */
     window.CS_ON_LANG_CHANGE = function () {
+      attacherSecoursImages();
       lancerTyped();
       afficherEtape(etapeCourante, false);
       afficherZone(zoneCourante, false);
